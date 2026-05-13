@@ -3,6 +3,8 @@ import { CartDrawer } from "@/components/ui/CartDrawer";
 import { Hero } from "@/components/sections/Hero";
 import { ProductShowcase } from "@/components/sections/ProductShowcase";
 import { About } from "@/components/sections/About";
+import { Testimonials } from "@/components/sections/Testimonials";
+import { Faq } from "@/components/sections/Faq";
 import { Footer } from "@/components/sections/Footer";
 
 export default function Home() {
@@ -13,6 +15,8 @@ export default function Home() {
       <Hero />
       <ProductShowcase />
       <About />
+      <Testimonials />
+      <Faq />
       <Footer />
     </main>
   );

@@ -62,7 +62,7 @@ export function Footer() {
             <ul className="space-y-4 text-xs text-white/40 uppercase tracking-widest font-light">
               <li><Link href="#about" className="hover:text-terra-beige transition-colors">Our Philosophy</Link></li>
               <li><Link href="#" className="hover:text-terra-beige transition-colors">Journal</Link></li>
-              <li><Link href="#" className="hover:text-terra-beige transition-colors">Contact</Link></li>
+              <li><Link href="/contact" className="hover:text-terra-beige transition-colors">Contact</Link></li>
               <li><Link href="#" className="hover:text-terra-beige transition-colors">FAQ</Link></li>
             </ul>
           </div>

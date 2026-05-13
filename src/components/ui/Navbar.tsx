@@ -46,14 +46,14 @@ export function Navbar() {
         {/* Center Island: Navigation Links (Desktop Only) */}
         {!isMobile && (
           <div className="bg-[#1C1C1C]/90 backdrop-blur-md border border-white/10 px-8 py-4 rounded-full flex items-center justify-center gap-8 text-xs uppercase tracking-[0.3em] font-medium text-white/70 pointer-events-auto">
-            <Link href="#collection" className="hover:text-terra-beige hover:tracking-[0.35em] transition-all duration-300">
+            <Link href="/#collection" className="hover:text-terra-beige hover:tracking-[0.35em] transition-all duration-300">
               Collection
             </Link>
-            <Link href="#about" className="hover:text-terra-beige hover:tracking-[0.35em] transition-all duration-300">
+            <Link href="/#about" className="hover:text-terra-beige hover:tracking-[0.35em] transition-all duration-300">
               Philosophy
             </Link>
-            <Link href="#" className="hover:text-terra-beige hover:tracking-[0.35em] transition-all duration-300">
-              Journal
+            <Link href="/contact" className="hover:text-terra-beige hover:tracking-[0.35em] transition-all duration-300">
+              Contact
             </Link>
           </div>
         )}
@@ -99,28 +99,21 @@ export function Navbar() {
           >
             <nav className="flex flex-col items-center gap-10 text-2xl font-serif text-terra-beige">
               <Link
-                href="#collection"
+                href="/#collection"
                 onClick={() => setIsMenuOpen(false)}
                 className="hover:text-white transition-colors tracking-wide"
               >
                 Collection
               </Link>
               <Link
-                href="#about"
+                href="/#about"
                 onClick={() => setIsMenuOpen(false)}
                 className="hover:text-white transition-colors tracking-wide"
               >
                 Our Philosophy
               </Link>
               <Link
-                href="#"
-                onClick={() => setIsMenuOpen(false)}
-                className="hover:text-white transition-colors tracking-wide"
-              >
-                Journal
-              </Link>
-              <Link
-                href="#"
+                href="/contact"
                 onClick={() => setIsMenuOpen(false)}
                 className="hover:text-white transition-colors tracking-wide"
               >
