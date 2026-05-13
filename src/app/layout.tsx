@@ -15,8 +15,31 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://terra-man-s-company.vercel.app'),
   title: "TERRA Man's Co. | Luxury Men's Grooming",
-  description: "Crafted for the modern man. Bold, refined, immersive luxury men's grooming essentials.",
+  description: "High-quality men's skincare and grooming products. Simple and effective face wash and beard oil made with natural ingredients.",
+  openGraph: {
+    title: "TERRA Man's Co. | Luxury Men's Grooming",
+    description: "High-quality men's skincare and grooming products. Simple and effective face wash and beard oil made with natural ingredients.",
+    url: "https://terra-man-s-company.vercel.app",
+    siteName: "TERRA Man's Co.",
+    images: [
+      {
+        url: "/images/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "TERRA Man's Co. Luxury Men's Grooming",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "TERRA Man's Co. | Luxury Men's Grooming",
+    description: "High-quality men's skincare and grooming products. Simple and effective face wash and beard oil made with natural ingredients.",
+    images: ["/images/og-image.png"],
+  },
 };
 
 export default function RootLayout({
