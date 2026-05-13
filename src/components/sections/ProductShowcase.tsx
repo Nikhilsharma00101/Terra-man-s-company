@@ -54,11 +54,11 @@ export function ProductShowcase() {
           </p>
         </div>
 
-        {/* Bento Grid Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
+        {/* Stacked Card Layout on Mobile, Bento Grid on Desktop */}
+        <div className="space-y-6 lg:space-y-0 lg:grid lg:grid-cols-12 gap-6 lg:gap-8">
 
           {/* Card 1: Intro / Statement (Spans 4 cols) */}
-          <div className="lg:col-span-4 bg-[#1C1C1C] backdrop-blur-sm p-8 lg:p-12 border border-white/10 flex flex-col justify-between min-h-[300px] lg:min-h-full hover:border-white/20 transition-colors duration-500 rounded-lg">
+          <div className="sticky top-24 lg:relative lg:top-0 lg:col-span-4 bg-[#1C1C1C] backdrop-blur-sm p-8 lg:p-12 border border-white/10 flex flex-col justify-between min-h-[300px] lg:min-h-full hover:border-white/20 transition-colors duration-500 rounded-lg">
             <div>
               <span className="text-terra-bronze text-xs font-mono font-semibold mb-4 block">Nº 01</span>
               <h3 className="text-3xl font-serif text-terra-beige mb-4 leading-tight">The Ritual of Grounding</h3>
@@ -73,25 +73,32 @@ export function ProductShowcase() {
           </div>
 
           {/* Card 2: Product 1 - Face Wash (Spans 8 cols) */}
-          <div className="lg:col-span-8 group relative bg-[#1A1A1A] border border-white/10 overflow-hidden h-[500px] lg:h-[600px] hover:border-terra-bronze/30 transition-colors duration-500 rounded-lg">
-            {/* Ambient Glow behind product */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(176,141,91,0.15)_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+          <div className="sticky top-32 lg:relative lg:top-0 lg:col-span-8 group bg-[#1A1A1A] border border-white/10 overflow-hidden h-[500px] lg:h-[600px] hover:border-terra-bronze/30 transition-colors duration-500 rounded-lg flex flex-col">
+            
+            {/* Top Part: Image (Height 65%) */}
+            <div className="relative h-[65%] flex items-center justify-center overflow-hidden">
+              {/* Ambient Glow behind product */}
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(176,141,91,0.15)_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
-            {/* Background Texture */}
-            <div className="absolute inset-0 opacity-20 group-hover:opacity-30 transition-opacity duration-700">
-              <Image
-                src="/images/water-ripple.png"
-                alt="Water texture"
-                fill
-                className="object-cover"
-              />
-            </div>
+              {/* Background Texture */}
+              <div className="absolute inset-0 opacity-20 group-hover:opacity-30 transition-opacity duration-700">
+                <Image
+                  src="/images/water-ripple.png"
+                  alt="Water texture"
+                  fill
+                  className="object-cover"
+                />
+              </div>
 
-            <div className="absolute inset-0 bg-gradient-to-t from-[#141414] via-transparent to-transparent z-10" />
+              {/* Watermark Number behind image */}
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
+                <span className="text-[12rem] lg:text-[18rem] font-serif font-bold text-white/[0.02] select-none">
+                  01
+                </span>
+              </div>
 
-            {/* Product Image */}
-            <div className="absolute inset-0 flex items-center justify-center z-10">
-              <div className="relative w-[250px] h-[350px] lg:w-[300px] lg:h-[400px] transition-transform duration-700 ease-out group-hover:scale-105">
+              {/* Product Image */}
+              <div className="relative w-[180px] h-[220px] lg:w-[250px] lg:h-[300px] transition-transform duration-700 ease-out group-hover:scale-105 z-10">
                 <Image
                   src={products[0].image}
                   alt={products[0].name}
@@ -99,61 +106,73 @@ export function ProductShowcase() {
                   className="object-contain filter drop-shadow-[0_25px_25px_rgba(0,0,0,0.6)]"
                 />
               </div>
-            </div>
 
-            {/* Content Overlay */}
-            <div className="absolute inset-0 z-20 p-8 lg:p-12 flex flex-col justify-between">
-              <div className="flex justify-between items-start">
+              {/* Category Tag (Top Left) */}
+              <div className="absolute top-4 left-4 z-20">
                 <span className="text-terra-bronze uppercase tracking-[0.2em] text-xs font-semibold border border-terra-bronze/30 px-3 py-1 rounded-sm bg-[#141414]/80">
                   Skincare
                 </span>
+              </div>
+              
+              {/* Number Tag (Top Right) */}
+              <div className="absolute top-4 right-4 z-20">
                 <span className="text-white/50 text-xs font-mono font-semibold">01/02</span>
               </div>
+            </div>
 
-              <div className="flex flex-col md:flex-row justify-between items-end gap-6">
+            {/* Bottom Part: Content (Height 35%) */}
+            <div className="h-[35%] bg-[#1C1C1C] p-6 border-t border-white/10 flex flex-col justify-between">
+              <div className="flex justify-between items-start">
                 <div>
-                  <h3 className="text-3xl lg:text-4xl font-serif text-terra-beige mb-2 tracking-tight">
+                  <h3 className="text-xl font-serif text-terra-beige mb-1 tracking-tight">
                     {products[0].name}
                   </h3>
-                  <p className="text-white/70 text-sm font-light max-w-sm">
+                  <p className="text-white/60 text-xs font-light max-w-sm">
                     Deep cleansing with activated charcoal and volcanic ash.
                   </p>
                 </div>
+              </div>
 
-                <div className="flex items-center gap-6 bg-[#222]/90 backdrop-blur-md p-4 border border-white/10 w-full md:w-auto justify-between md:justify-start rounded-md">
-                  <span className="text-xl font-serif text-terra-beige font-semibold">₹{products[0].price}</span>
-                  <button
-                    onClick={() => addItem(products[0])}
-                    className="flex items-center gap-2 bg-terra-beige text-terra-black px-5 py-2.5 uppercase tracking-widest text-[10px] font-semibold hover:bg-white transition-colors rounded-sm"
-                  >
-                    <span>Add</span>
-                    <Plus className="w-3 h-3" />
-                  </button>
-                </div>
+              <div className="flex justify-between items-center mt-auto border-t border-white/5 pt-3">
+                <span className="text-lg font-serif text-terra-beige font-semibold">₹{products[0].price}</span>
+                <button
+                  onClick={() => addItem(products[0])}
+                  className="flex items-center gap-2 bg-terra-beige text-terra-black px-4 py-2 uppercase tracking-widest text-[9px] font-semibold hover:bg-white transition-colors rounded-full"
+                >
+                  <span>Add</span>
+                  <Plus className="w-3 h-3" />
+                </button>
               </div>
             </div>
           </div>
 
           {/* Card 3: Product 2 - Beard Oil (Spans 8 cols) */}
-          <div className="lg:col-span-8 group relative bg-[#1A1A1A] border border-white/10 overflow-hidden h-[500px] lg:h-[600px] hover:border-terra-bronze/30 transition-colors duration-500 rounded-lg">
-            {/* Ambient Glow behind product */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(176,141,91,0.15)_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+          <div className="sticky top-40 lg:relative lg:top-0 lg:col-span-8 group bg-[#1A1A1A] border border-white/10 overflow-hidden h-[500px] lg:h-[600px] hover:border-terra-bronze/30 transition-colors duration-500 rounded-lg flex flex-col">
+            
+            {/* Top Part: Image (Height 65%) */}
+            <div className="relative h-[65%] flex items-center justify-center overflow-hidden">
+              {/* Ambient Glow behind product */}
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(176,141,91,0.15)_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
-            {/* Background Texture */}
-            <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity duration-700">
-              <Image
-                src="/images/oil-texture.png"
-                alt="Oil texture"
-                fill
-                className="object-cover"
-              />
-            </div>
+              {/* Background Texture */}
+              <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity duration-700">
+                <Image
+                  src="/images/oil-texture.png"
+                  alt="Oil texture"
+                  fill
+                  className="object-cover"
+                />
+              </div>
 
-            <div className="absolute inset-0 bg-gradient-to-t from-[#141414] via-transparent to-transparent z-10" />
+              {/* Watermark Number behind image */}
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
+                <span className="text-[12rem] lg:text-[18rem] font-serif font-bold text-white/[0.02] select-none">
+                  02
+                </span>
+              </div>
 
-            {/* Product Image */}
-            <div className="absolute inset-0 flex items-center justify-center z-10">
-              <div className="relative w-[250px] h-[350px] lg:w-[300px] lg:h-[400px] transition-transform duration-700 ease-out group-hover:scale-105">
+              {/* Product Image */}
+              <div className="relative w-[180px] h-[220px] lg:w-[250px] lg:h-[300px] transition-transform duration-700 ease-out group-hover:scale-105 z-10">
                 <Image
                   src={products[1].image}
                   alt={products[1].name}
@@ -161,43 +180,48 @@ export function ProductShowcase() {
                   className="object-contain filter drop-shadow-[0_25px_25px_rgba(0,0,0,0.6)]"
                 />
               </div>
-            </div>
 
-            {/* Content Overlay */}
-            <div className="absolute inset-0 z-20 p-8 lg:p-12 flex flex-col justify-between">
-              <div className="flex justify-between items-start">
+              {/* Category Tag (Top Left) */}
+              <div className="absolute top-4 left-4 z-20">
                 <span className="text-terra-bronze uppercase tracking-[0.2em] text-xs font-semibold border border-terra-bronze/30 px-3 py-1 rounded-sm bg-[#141414]/80">
                   Grooming
                 </span>
+              </div>
+              
+              {/* Number Tag (Top Right) */}
+              <div className="absolute top-4 right-4 z-20">
                 <span className="text-white/50 text-xs font-mono font-semibold">02/02</span>
               </div>
+            </div>
 
-              <div className="flex flex-col md:flex-row justify-between items-end gap-6">
+            {/* Bottom Part: Content (Height 35%) */}
+            <div className="h-[35%] bg-[#1C1C1C] p-6 border-t border-white/10 flex flex-col justify-between">
+              <div className="flex justify-between items-start">
                 <div>
-                  <h3 className="text-3xl lg:text-4xl font-serif text-terra-beige mb-2 tracking-tight">
+                  <h3 className="text-xl font-serif text-terra-beige mb-1 tracking-tight">
                     {products[1].name}
                   </h3>
-                  <p className="text-white/70 text-sm font-light max-w-sm">
+                  <p className="text-white/60 text-xs font-light max-w-sm">
                     Softens and tames with argan oil and sandalwood.
                   </p>
                 </div>
+              </div>
 
-                <div className="flex items-center gap-6 bg-[#222]/90 backdrop-blur-md p-4 border border-white/10 w-full md:w-auto justify-between md:justify-start rounded-md">
-                  <span className="text-xl font-serif text-terra-beige font-semibold">₹{products[1].price}</span>
-                  <button
-                    onClick={() => addItem(products[1])}
-                    className="flex items-center gap-2 bg-terra-beige text-terra-black px-5 py-2.5 uppercase tracking-widest text-[10px] font-semibold hover:bg-white transition-colors rounded-sm"
-                  >
-                    <span>Add</span>
-                    <Plus className="w-3 h-3" />
-                  </button>
-                </div>
+              <div className="flex justify-between items-center mt-auto border-t border-white/5 pt-3">
+                <span className="text-lg font-serif text-terra-beige font-semibold">₹{products[1].price}</span>
+                <button
+                  onClick={() => addItem(products[1])}
+                  className="flex items-center gap-2 bg-terra-beige text-terra-black px-4 py-2 uppercase tracking-widest text-[9px] font-semibold hover:bg-white transition-colors rounded-full"
+                >
+                  <span>Add</span>
+                  <Plus className="w-3 h-3" />
+                </button>
               </div>
             </div>
           </div>
 
           {/* Card 4: Detailed Info / Specs (Spans 4 cols) */}
-          <div className="lg:col-span-4 bg-[#1C1C1C] backdrop-blur-sm p-8 lg:p-12 border border-white/10 flex flex-col justify-between min-h-[300px] lg:min-h-full hover:border-white/20 transition-colors duration-500 rounded-lg">
+          <div className="sticky top-48 lg:relative lg:top-0 lg:col-span-4 bg-[#1C1C1C] backdrop-blur-sm p-8 lg:p-12 border border-white/10 flex flex-col justify-between min-h-[300px] lg:min-h-full hover:border-white/20 transition-colors duration-500 rounded-lg">
             <div>
               <span className="text-terra-bronze uppercase tracking-[0.2em] text-xs font-semibold mb-6 block">
                 The Details
@@ -226,6 +250,8 @@ export function ProductShowcase() {
           </div>
 
         </div>
+
+
 
       </div>
     </section>
