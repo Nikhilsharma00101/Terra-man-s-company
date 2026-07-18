@@ -6,98 +6,150 @@ import Image from "next/image";
 
 export function About() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const dividerRef = useRef<HTMLDivElement>(null);
   
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"]
   });
 
-  // Parallax effects for different layers
-  const yImage = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
-  const yText = useTransform(scrollYProgress, [0, 1], ["0%", "-20%"]);
+  const { scrollYProgress: dividerScroll } = useScroll({
+    target: dividerRef,
+    offset: ["start end", "center center"]
+  });
+
+  // Smooth parallax for the image
+  const yImage = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
+
+  // Scroll animations for the partition divider
+  const lineWidth = useTransform(dividerScroll, [0.1, 0.95], ["0%", "100%"]);
+  const labelOpacity = useTransform(dividerScroll, [0.7, 0.95], [0, 1]);
 
   return (
-    <section id="about" ref={containerRef} className="py-40 bg-terra-black relative overflow-hidden">
-      <div className="container mx-auto px-6 lg:px-12 relative z-10">
+    <section id="about" ref={containerRef} className="pt-12 lg:pt-16 pb-24 lg:pb-40 bg-[#0c0c0c] relative overflow-hidden border-b border-white/5">
+      {/* Scroll-Animated Divider Partition */}
+      <div ref={dividerRef} className="w-full relative h-[40px] flex items-center justify-center pointer-events-none mb-10 lg:mb-14">
+        {/* Underlay Line */}
+        <div className="absolute inset-x-0 h-px bg-white/5" />
         
-        {/* Massive Background Text (Asymmetric) */}
-        <span className="absolute -top-10 left-10 text-[20vw] font-serif text-white/5 leading-none select-none pointer-events-none">
-          MANIFESTO
-        </span>
-
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-8 items-center">
-          
-          {/* Left Side: Large Tall Image with Overlap */}
-          <div className="lg:col-span-5 relative h-[60vh] lg:h-[80vh] w-full">
-            <motion.div 
-              style={{ y: yImage }}
-              className="relative w-full h-full overflow-hidden"
-            >
-              <div className="absolute inset-0 bg-gradient-to-b from-terra-black/20 via-transparent to-terra-black/80 z-10" />
-              <Image
-                src="/images/about-bg.png"
-                alt="Macro shot of textured earth with bronze vein"
-                fill
-                className="object-cover filter contrast-125 grayscale-[10%]"
-              />
-            </motion.div>
-            
-            {/* Overlapping Card */}
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-              className="absolute -bottom-10 right-0 lg:-right-20 bg-terra-charcoal p-8 md:p-12 border border-white/10 shadow-2xl max-w-sm z-20"
-            >
-              <span className="text-terra-bronze uppercase tracking-[0.2em] text-xs font-semibold mb-3 block">
-                The Origin
-              </span>
-              <p className="text-white/60 text-sm font-light leading-relaxed">
-                By fusing raw, earth-derived ingredients with advanced formulations, we&apos;ve created a symphony of sensory experiences.
-              </p>
-            </motion.div>
-          </div>
-
-          {/* Right Side: Massive Typography & Story */}
-          <div className="lg:col-span-7 flex flex-col justify-center lg:pl-16">
-            <motion.div style={{ y: yText }}>
-              <span className="text-terra-bronze uppercase tracking-[0.3em] text-xs font-semibold block mb-6">
-                The Philosophy
-              </span>
-              
-              <h2 className="text-4xl md:text-6xl lg:text-7xl font-serif text-terra-beige leading-[1.1] mb-8 text-balance">
-                &quot;TERRA was built for men who carry quiet confidence.&quot;
-              </h2>
-              
-              <div className="w-20 h-px bg-terra-bronze/50 mb-8" />
-              
-              <p className="text-lg text-white/50 max-w-xl font-light leading-relaxed mb-6">
-                We believe that grooming is not a chore, but a ritual. An act of grounding oneself before facing the world. Unapologetically bold. Strikingly minimal.
-              </p>
-              
-              <p className="text-sm text-white/30 max-w-md font-light leading-relaxed">
-                Our products are designed to be sensory markers in your day. A moment of pause. A transition from rest to action, or action to rest.
-              </p>
-
-              {/* Minimal Grid Detail */}
-              <div className="grid grid-cols-2 gap-4 mt-12 border-t border-white/10 pt-8 max-w-sm">
-                <div>
-                  <p className="text-terra-bronze text-xs uppercase tracking-widest mb-1">Raw</p>
-                  <p className="text-white/50 text-xs">Earth-derived</p>
-                </div>
-                <div>
-                  <p className="text-terra-bronze text-xs uppercase tracking-widest mb-1">Refined</p>
-                  <p className="text-white/50 text-xs">Scientifically balanced</p>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
+        {/* Animated Golden Drawing Line */}
+        <motion.div 
+          style={{ width: lineWidth }}
+          className="absolute h-px bg-gradient-to-r from-transparent via-terra-bronze to-transparent left-1/2 -translate-x-1/2" 
+        />
+        
+        {/* Floating Brand Stamp */}
+        <motion.div
+          style={{ opacity: labelOpacity }}
+          className="relative bg-[#0c0c0c] px-6 py-1.5 border border-white/5 rounded-full flex items-center gap-2"
+        >
+          <span className="w-1.5 h-1.5 rounded-full bg-terra-gold animate-pulse" />
+          <span className="font-serif text-[10px] uppercase tracking-[0.25em] text-terra-beige whitespace-nowrap">
+            EST. TERRA MAN &amp; CO.
+          </span>
+        </motion.div>
       </div>
 
-      {/* Abstract background elements for depth */}
-      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-terra-bronze/5 rounded-full blur-[100px] pointer-events-none z-0" />
+      {/* Background Glow */}
+      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-terra-bronze/5 rounded-full blur-[120px] pointer-events-none z-0" />
+
+      <div className="container mx-auto px-6 lg:px-12 relative z-10">
+        
+        {/* Main Grid Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+          
+          {/* LEFT COLUMN: Gallery Image & Caption (5 cols) */}
+          <div className="lg:col-span-5 w-full space-y-6">
+            <div className="relative h-[50vh] lg:h-[70vh] w-full rounded-lg overflow-hidden border border-white/5 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+              {/* Luxury gold border overlays */}
+              <div className="absolute top-4 bottom-4 left-4 right-4 border border-terra-bronze/10 pointer-events-none z-20" />
+              <div className="absolute top-3 left-3 w-4 h-4 border-t border-l border-terra-bronze/30 pointer-events-none z-20" />
+              <div className="absolute top-3 right-3 w-4 h-4 border-t border-r border-terra-bronze/30 pointer-events-none z-20" />
+              <div className="absolute bottom-3 left-3 w-4 h-4 border-b border-l border-terra-bronze/30 pointer-events-none z-20" />
+              <div className="absolute bottom-3 right-3 w-4 h-4 border-b border-r border-terra-bronze/30 pointer-events-none z-20" />
+
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#0c0c0c]/80 z-10" />
+              
+              <motion.div 
+                style={{ y: yImage }}
+                className="relative w-full h-[120%] -top-[10%] overflow-hidden"
+              >
+                <Image
+                  src="/images/about-bg.png"
+                  alt="Textured earth showing deep layers of minerals"
+                  fill
+                  className="object-cover filter contrast-110 grayscale-[10%]"
+                  priority
+                />
+              </motion.div>
+            </div>
+            
+            {/* Elegant Sub-caption */}
+            <p className="text-white/80 text-sm md:text-base font-light leading-relaxed font-sans border-l-2 border-terra-bronze pl-4">
+              Sourced from the earth, formulated with scientific precision. Every drop is crafted to respect your skin&apos;s natural balance.
+            </p>
+          </div>
+
+          {/* RIGHT COLUMN: Philosophy Story & Pillars (7 cols) */}
+          <div className="lg:col-span-7 flex flex-col justify-center lg:pl-10">
+            <div>
+              <span className="text-terra-bronze uppercase tracking-[0.25em] text-xs font-semibold block mb-4">
+                Our Philosophy
+              </span>
+              
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-white leading-tight mb-8">
+                Quiet confidence, rooted in nature.
+              </h2>
+              
+              <p className="text-white/95 text-base md:text-lg font-light leading-relaxed mb-10 font-sans">
+                We believe that grooming is not a chore, but an intentional ritual. An act of pause to ground yourself and face the world with calm, focused energy.
+              </p>
+
+              {/* Core Pillars List - High Contrast and Legible */}
+              <div className="space-y-8 border-t border-white/10 pt-8">
+                
+                {/* Pillar 1 */}
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-3 md:gap-6">
+                  <div className="md:col-span-3 font-mono text-sm font-bold text-terra-bronze uppercase tracking-widest flex items-center md:items-start gap-2">
+                    <span>01 / PURITY</span>
+                  </div>
+                  <div className="md:col-span-9">
+                    <p className="text-white/90 text-sm md:text-base font-light leading-relaxed font-sans">
+                      We formulate using clean, active organic ingredients. Absolutely free of parabens, synthetic colorants, sulfates, or artificial fragrances. Safe, honest skincare for men.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Pillar 2 */}
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-3 md:gap-6">
+                  <div className="md:col-span-3 font-mono text-sm font-bold text-terra-bronze uppercase tracking-widest flex items-center md:items-start gap-2">
+                    <span>02 / RITUAL</span>
+                  </div>
+                  <div className="md:col-span-9">
+                    <p className="text-white/90 text-sm md:text-base font-light leading-relaxed font-sans">
+                      Grooming should be a moment to center yourself. Our products provide sensory markers in your daily schedule, offering a clean transition from action to rest.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Pillar 3 */}
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-3 md:gap-6">
+                  <div className="md:col-span-3 font-mono text-sm font-bold text-terra-bronze uppercase tracking-widest flex items-center md:items-start gap-2">
+                    <span>03 / DESIGN</span>
+                  </div>
+                  <div className="md:col-span-9">
+                    <p className="text-white/90 text-sm md:text-base font-light leading-relaxed font-sans">
+                      We house our active formulas in simple, recyclable glass containers. Minimal styling designed to look refined on your bathroom shelf while preserving ingredient potency.
+                    </p>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
     </section>
   );
 }
