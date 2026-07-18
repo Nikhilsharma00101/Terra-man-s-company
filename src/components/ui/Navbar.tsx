@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { ShoppingBag, Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import Image from "next/image";
+import { BrandLogo } from "./BrandLogo";
 
 export function Navbar() {
   const { items, setIsOpen } = useCart();
@@ -30,16 +30,9 @@ export function Navbar() {
       <div className="fixed top-6 left-0 right-0 z-50 px-6 md:px-12 flex justify-between items-center pointer-events-none">
 
         {/* Left Island: Logo */}
-        <div className="bg-[#1C1C1C]/90 backdrop-blur-md border border-white/10 px-4 py-1 rounded-full flex items-center justify-center pointer-events-auto hover:border-white/20 transition-colors">
-          <Link href="/" className="hover:opacity-80 transition-opacity block">
-            <Image
-              src="/images/logo-new.png"
-              alt="Terra Logo"
-              width={240}
-              height={80}
-              className="h-10 md:h-12 w-auto object-contain"
-              priority
-            />
+        <div className="bg-[#1C1C1C]/90 backdrop-blur-md border border-white/10 px-5 py-1.5 rounded-full flex items-center justify-center pointer-events-auto hover:border-white/20 transition-all duration-300">
+          <Link href="/" className="block">
+            <BrandLogo />
           </Link>
         </div>
 
