@@ -9,10 +9,13 @@ export function Footer() {
       <div className="container mx-auto px-6 lg:px-12">
         
         {/* Massive Brand Title in Footer */}
-        <div className="mb-24 overflow-hidden">
-          <h2 className="text-[15vw] font-serif text-terra-beige/10 leading-none tracking-tighter text-center select-none">
+        <div className="mb-20 overflow-hidden text-center">
+          <h2 className="text-[15vw] font-serif text-terra-beige/10 leading-none tracking-tighter select-none">
             TERRA MAN&apos;S CO.
           </h2>
+          <p className="text-terra-gold uppercase tracking-[0.4em] font-mono text-xs sm:text-sm font-bold -mt-2 sm:-mt-6">
+            Because Men Deserve Better
+          </p>
         </div>
 
         {/* Main Footer Grid */}
@@ -84,8 +87,8 @@ export function Footer() {
           <p>© {new Date().getFullYear()} TERRA Man&apos;s Co. All rights reserved.</p>
           
           <div className="flex gap-8 mt-4 md:mt-0">
-            <Link href="#" className="hover:text-terra-beige transition-colors">Privacy Policy</Link>
-            <Link href="#" className="hover:text-terra-beige transition-colors">Terms of Service</Link>
+            <Link href="/privacy-policy" className="hover:text-terra-beige transition-colors">Privacy Policy</Link>
+            <Link href="/terms-of-service" className="hover:text-terra-beige transition-colors">Terms of Service</Link>
           </div>
         </div>
       </div>

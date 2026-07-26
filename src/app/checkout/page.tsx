@@ -14,11 +14,12 @@ const steps = [
 ];
 
 export default function CheckoutPage() {
-  const { items, cartTotal, updateQuantity, removeItem } = useCart();
+  const { items, cartTotal, updateQuantity, removeItem, clearCart } = useCart();
   const [currentStep, setCurrentStep] = useState(0);
   const [paymentMethod, setPaymentMethod] = useState("card"); // card, upi, cash
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const [formData, setFormData] = useState({
     email: "",
@@ -49,19 +50,54 @@ export default function CheckoutPage() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (currentStep < steps.length - 1) {
       nextStep();
       return;
     }
     setIsSubmitting(true);
-    
-    // Simulate payment processing
-    setTimeout(() => {
+    setErrorMessage("");
+
+    try {
+      const orderPayload = {
+        customer: {
+          fullName: formData.name || "Terra Customer",
+          email: formData.email,
+          phone: formData.phone,
+          address: formData.address,
+          city: formData.city,
+          postalCode: formData.postal,
+          country: "India",
+        },
+        items: items.map((it) => ({
+          productId: it.id,
+          title: it.name,
+          price: it.price,
+          quantity: it.quantity,
+        })),
+        totalAmount: cartTotal,
+        paymentMethod: paymentMethod === "card" ? "Credit Card" : paymentMethod === "upi" ? "UPI" : "COD",
+      };
+
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(orderPayload),
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        clearCart();
+        setIsSuccess(true);
+      } else {
+        setErrorMessage(data.error || "Failed to place order.");
+      }
+    } catch (err) {
+      setErrorMessage("Network error placing order. Please try again.");
+    } finally {
       setIsSubmitting(false);
-      setIsSuccess(true);
-    }, 3000);
+    }
   };
 
   if (items.length === 0 && !isSuccess) {
@@ -182,6 +218,12 @@ export default function CheckoutPage() {
                 <div className="absolute top-3 right-3 w-2.5 h-2.5 border-t border-r border-terra-bronze/30 pointer-events-none" />
                 <div className="absolute bottom-3 left-3 w-2.5 h-2.5 border-b border-l border-terra-bronze/30 pointer-events-none" />
                 <div className="absolute bottom-3 right-3 w-2.5 h-2.5 border-b border-r border-terra-bronze/30 pointer-events-none" />
+                
+                {errorMessage && (
+                  <div className="bg-rose-950/50 border border-rose-500/40 text-rose-300 text-xs p-3 rounded mb-4 font-mono text-center">
+                    {errorMessage}
+                  </div>
+                )}
                 
                 <AnimatePresence mode="wait">
                   {isSuccess ? (

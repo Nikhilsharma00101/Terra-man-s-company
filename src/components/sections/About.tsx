@@ -100,6 +100,20 @@ export function About() {
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-white leading-tight mb-8">
                 Quiet confidence, rooted in nature.
               </h2>
+
+              {/* Brand Tagline Manifesto Box */}
+              <div className="my-8 p-6 rounded-2xl bg-gradient-to-r from-[#161619] via-[#121215] to-[#161619] border border-terra-gold/30 relative overflow-hidden shadow-2xl">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-terra-gold/5 rounded-full blur-2xl pointer-events-none" />
+                <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-terra-gold font-bold block mb-2">
+                  OUR ESSENTIAL BELIEF
+                </span>
+                <blockquote className="font-serif text-2xl md:text-3xl text-terra-beige font-medium italic leading-snug">
+                  &ldquo;Because men deserve better.&rdquo;
+                </blockquote>
+                <p className="text-xs text-white/60 font-sans mt-2 font-light">
+                  Uncompromising formulations engineered for real results without unnecessary synthetics.
+                </p>
+              </div>
               
               <p className="text-white/95 text-base md:text-lg font-light leading-relaxed mb-10 font-sans">
                 We believe that grooming is not a chore, but an intentional ritual. An act of pause to ground yourself and face the world with calm, focused energy.
